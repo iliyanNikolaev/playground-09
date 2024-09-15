@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>playground-09</title>
+    <style>
+        #root {
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <label>Name</label>
+    <input type="text">
+    <button>SEND</button>
+
+    <div id="root"></div>
+    <script>
+        const root = document.getElementById('root');
+
+        init();
+
+        async function init() {
+            try {
+                const data = await fetchDataFromServer();
+
+                data.forEach(el => {
+                    const div = document.createElement('div');
+                    div.style.border = '1px solid'
+                    div.style.marginBottom = '1rem'
+                    div.style.padding = '.5rem'
+
+                    const p1 = document.createElement('p');
+                    const p2 = document.createElement('p');
+
+                    p1.textContent = 'id: ' + el.id;
+                    p2.textContent = 'name: ' + el.name;
+
+                    div.appendChild(p1);
+                    div.appendChild(p2);
+                    root.appendChild(div);
+                });
+            } catch (error) {
+                alert('error');
+            }
+        }
+
+        async function fetchDataFromServer() {
+            const response = await fetch('http://localhost:4004/data');
+            const data = await response.json();
+            return data; 
+        }
+        
+                        
+    </script>
+</body>
+</html>
